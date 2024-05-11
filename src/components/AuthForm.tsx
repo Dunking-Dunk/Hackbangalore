@@ -66,8 +66,11 @@ const AuthForm = ({ type }: { type: string }) => {
         const login = await signIn("credentials", {
           email: data.email, password: data.password, redirect: false
         })
-        console.log(login)
-        if (login?.ok) router.push('/dashboard')
+        if (login?.ok) {
+            toast({
+              title: "Succesefully Logged In",
+            })
+          router.push('/dashboard')}
         else {
           toast({
             title: "Something went wrong",
@@ -115,7 +118,7 @@ const AuthForm = ({ type }: { type: string }) => {
       </header>
       {user ? (
         <div className="flex flex-col gap-4">
-          <Button>Working</Button>
+          <Button>Link bank</Button>
         </div>
       ) : (
         <>
