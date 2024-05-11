@@ -26,6 +26,7 @@ model User {
   email       String @unique
   password    String
   company Company?
+  smeLoan Loan[]
 }
 
 model Company {
@@ -35,4 +36,31 @@ model Company {
   address String
   user User @relation(fields: [userId], references: [id])
   userId String @unique @db.ObjectId
+  smeLoan Loan[]
+}
+
+enum Status {
+  PROCESSING
+  APPROVED
+  DECLINED
+}
+
+model Loan {
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  pan String @unique
+  bankName String
+  accountNumber String @unique
+  reason String 
+  loanAmount Float 
+  quotation String 
+  bankStatement String
+  balanceSheet String
+  status Status @default(PROCESSING)
+  ITR String
+  udayam String
+  cashFlow String
+  user User @relation(fields: [userId], references: [id])
+  userId String @unique @db.ObjectId
+  company Company @relation(fields: [companyId], references: [id])
+  companyId String @unique @db.ObjectId
 }

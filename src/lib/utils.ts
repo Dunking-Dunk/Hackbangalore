@@ -24,3 +24,10 @@ export const authFormSchema = (type: string) => z.object({
   password: z.string().min(8),
 })
 
+export const loanFormSchema = () => z.object({
+    pan: z.string().min(10),
+    bankName: z.string().min(2),
+    accountNumber: z.string().min(3),
+    reason: z.string().min(10),
+    loanAmount: z.number(),
+})

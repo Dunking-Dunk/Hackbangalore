@@ -11,7 +11,10 @@ const Layout = ({children}: {
             <Header/>
             <div className="w-full flex flex-row">
                 <Sidebar/>
+                <div className='px-6 py-4 w-full h-full'>
                 {children}
+                </div>
+               
        </div>
         </div>
     )

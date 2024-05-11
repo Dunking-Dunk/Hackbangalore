@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
@@ -19,7 +18,7 @@ import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios'
 import { signIn } from 'next-auth/react';
-import { setupBuisness } from '@/lib/actions';
+
 
 const AuthForm = ({ type }: { type: string }) => {
   const {toast} = useToast()
