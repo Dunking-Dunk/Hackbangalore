@@ -8,7 +8,7 @@ import { CodatLink } from "@/components/CodatLink";
 import { useState } from "react";
 
 export default function OnBoard() {
-    const [companyId, setCompanyId] = useState(""); //provide company ID
+    const [companyId, setCompanyId] = useState("57dbb09e-a86a-4e4b-8e30-0c45c1561299"); //provide company ID
     const [modalOpen, setModalOpen] = useState(true);
 
     const onConnection = (connection: ConnectionCallbackArgs) =>

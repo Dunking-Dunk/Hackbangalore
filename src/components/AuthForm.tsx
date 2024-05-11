@@ -19,6 +19,7 @@ import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios'
 import { signIn } from 'next-auth/react';
+import { setupBuisness } from '@/lib/actions';
 
 const AuthForm = ({ type }: { type: string }) => {
   const {toast} = useToast()
@@ -55,10 +56,17 @@ const AuthForm = ({ type }: { type: string }) => {
           dateOfBirth: data.dateOfBirth!,
           ssn: data.ssn!,
           email: data.email,
-          password: data.password
+          password: data.password,
         }
 
-        const res = await axios.post('/api/register', userData)
+        const buisnessData = {
+          name: data.buisnessName,
+          address: data.buisnessAddress,
+          email: data.buisnessEmail
+        }
+
+        const res = await axios.post('/api/register', {userData, buisnessData})
+        router.push('/sign-in')
         setUser(res.data);
       }
 
@@ -66,6 +74,7 @@ const AuthForm = ({ type }: { type: string }) => {
         const login = await signIn("credentials", {
           email: data.email, password: data.password, redirect: false
         })
+      
         if (login?.ok) {
             toast({
               title: "Succesefully Logged In",
@@ -73,8 +82,8 @@ const AuthForm = ({ type }: { type: string }) => {
           router.push('/dashboard')}
         else {
           toast({
-            title: "Something went wrong",
-            description: 'Wrong password or mail',
+            title: "Something went Wrong",
+            description: login?.error,
           })
         }
 
@@ -118,7 +127,11 @@ const AuthForm = ({ type }: { type: string }) => {
       </header>
       {user ? (
         <div className="flex flex-col gap-4">
-          <Button>Link bank</Button>
+
+            {/* businessname
+            buisnessEmail
+            buisnessAddress */}
+          
         </div>
       ) : (
         <>
@@ -140,6 +153,9 @@ const AuthForm = ({ type }: { type: string }) => {
                     <CustomInput control={form.control} name='dateOfBirth' label="Date of Birth" placeholder='YYYY-MM-DD' />
                     <CustomInput control={form.control} name='ssn' label="SSN" placeholder='Example: 1234' />
                   </div>
+                  <CustomInput control={form.control} name='buisnessName' label="Company Name" placeholder='Enter your Buisness Name' />
+                  <CustomInput control={form.control} name='buisnessEmail' label="Company Email" placeholder='Enter your Buisness Email' />
+                  <CustomInput control={form.control} name='buisnessAddress' label="Company Address" placeholder='Enter your specific Buisness address' />
                 </>
               )}
 

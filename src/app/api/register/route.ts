@@ -8,15 +8,15 @@ export async function POST(
     try {
         const body = await req.json();
 
-        const data = body;
+        const {userData, buisnessData} = body;
 
-        if (!data.email || !data.password) {
+        if (!userData.email || !userData.password) {
             return new NextResponse("Missing data", { status: 500 });
         }
 
         const userAlreadyExist = await db.user.findFirst({
             where: {
-                email: data.email,
+                email: userData.email,
             }
         })
 
@@ -24,12 +24,18 @@ export async function POST(
             return new NextResponse("User already exist", { status: 500 });
         }
 
-        const hashedPassword = await bcrypt.hash(data.password, 12);
+        const hashedPassword = await bcrypt.hash(userData.password, 12);
 
         const newUser = await db.user.create({
             data: {
-                ...data,
-                password: hashedPassword
+                ...userData,
+                password: hashedPassword,
+                company: {
+                    create: {
+                    ...buisnessData
+                }
+                  
+                }
             }
         });
 
