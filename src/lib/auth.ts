@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt'
@@ -39,7 +41,8 @@ export const authOptions: NextAuthOptions = {
                 
                 return {
                     ...user,
-                    username: user.firstName
+                    username: user.firstName,
+                    role: user?.role
                 };
             },
         })
@@ -54,7 +57,8 @@ export const authOptions: NextAuthOptions = {
                 return {
                     ...token,
                     username: user?.username,
-                    id: user?.id
+                    id: user?.id,
+                    role: user?.role
                 }
             }
             return token;
@@ -65,7 +69,8 @@ export const authOptions: NextAuthOptions = {
                 user: {
                     ...session.user,
                     username: token.username,
-                    id: token?.id
+                    id: token?.id,
+                    role: token?.role
                 }
 
             }

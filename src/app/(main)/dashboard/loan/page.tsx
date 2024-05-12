@@ -27,7 +27,7 @@ const SMELoan = () => {
             </Button>
         </div>
         <h1 className="text-3xl font-bold">All Loans</h1>
-        <DataTable columns={loanColumn} data={loans}/>
+        <DataTable columns={loanColumn} data={JSON.stringify(loans)}/>
     </div>
     )
 }

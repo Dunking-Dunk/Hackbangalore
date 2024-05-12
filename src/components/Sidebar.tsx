@@ -10,15 +10,15 @@ const Sidebar = () => {
                 </div>
                 <Separator />
                 <div className="px-6  w-full">
-                <Link href={'/dashboard-loan'}>Buisness Analytics</Link>
-                </div>
-                <Separator />
-                <div className="px-6  w-full">
                 <Link href={'/dashboard/loan'}>Loan</Link>
                 </div>
                 <Separator />
                 <div className="px-6  w-full">
-                <Link href={'/dashboard-loan'}>Resources</Link>
+                <Link href={'/dashboard/marketplace'}>Resources Market</Link>
+                </div>
+                <Separator />
+                <div className="px-6  w-full">
+                <Link href={'/dashboard/marketplace'}>Ai Assitance</Link>
                 </div>
                 <Separator />
             </div>

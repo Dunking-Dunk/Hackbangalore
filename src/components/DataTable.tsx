@@ -30,7 +30,7 @@ const DataTable = ({ columns, data, filterColumn, getSelectedRow }:any) => {
     const [rowSelection, setRowSelection] = React.useState({})
 
     const table = useReactTable({
-        data,
+        data:JSON.parse(data),
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),

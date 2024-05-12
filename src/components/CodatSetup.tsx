@@ -6,16 +6,18 @@ import {
 } from "@codat/sdk-link-types"
 import { CodatLink } from "@/components/CodatLink";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
-export default function OnBoard() {
-    const [companyId, setCompanyId] = useState("57dbb09e-a86a-4e4b-8e30-0c45c1561299"); //provide company ID
+export default function OnBoard({cId}:any) {
+    const [companyId, setCompanyId] = useState(cId); //provide company ID
     const [modalOpen, setModalOpen] = useState(true);
 
     const onConnection = (connection: ConnectionCallbackArgs) =>
         alert(`On connection callback - ${connection.connectionId}`);
     const onClose = () => setModalOpen(false);
-    const onFinish = (e) => {
-        console.log(e)
+    const onFinish = () => {
+        console.log('completed')
+    
     };
     const onError = (error: ErrorCallbackArgs) =>
         alert(`On error callback - ${error.message}`);

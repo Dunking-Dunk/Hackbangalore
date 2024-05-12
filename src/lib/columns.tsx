@@ -36,3 +36,49 @@ export const loanColumn = [
     //   },
     // },
   ];
+
+  export const transactionColumn = [
+    {
+      accessorKey: "date",
+      header: "Date",
+    },
+    {
+      accessorKey: "note",
+      header: "Note",
+    },
+    {
+      accessorKey: "status",
+      header: "Transaction Status",
+    },
+    {
+      accessorKey: "totalAmount",
+      header: "Total Amount",
+    },
+    {
+      accessorKey: "transactionId",
+      header: "Transaction Id",
+    }
+  ];
+
+  export const balanceSheetColumn = [
+    {
+      accessorkey: "assets.value",
+      header: 'Assets Value'
+    },
+    {
+      accessorkey: 'date',
+      header: 'Date'
+    },
+    {
+      accessorkey: 'equity.value',
+      header: 'Equity Value'
+    },
+    {
+      accessorkey: 'liabilities.value',
+      header: 'Liability'
+    },
+    {
+      accessorkey: 'netAssets',
+      header: 'Net Assets'
+    },
+  ]

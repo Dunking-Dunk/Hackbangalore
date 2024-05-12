@@ -2,7 +2,6 @@
 import { db } from "./db"
 
 import { getServerSession } from "next-auth"
-import AuthForm from "@/components/AuthForm"
 import { authOptions } from "./auth"
 
 const getUserSession = async() => {
@@ -73,3 +72,4 @@ export const getAllLoan = async() => {
         }
     })
 }
+

@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 
-const protectedRoutes = ['/dashboard']
+const protectedRoutes = ['/dashboard', '/dashboard/loan', '/dashboard/loan/create', '/admin']
 const publicRoutes = ['/sign-in', '/sign-up', '/']
 
 export default async function middleware(req: NextRequest) {
   // 2. Check if the current route is protected or public
   
   const path = req.nextUrl.pathname
+
   const isProtectedRoute = protectedRoutes.includes(path)
   const isPublicRoute = publicRoutes.includes(path)
   // 3. Decrypt the session from the cookie
@@ -22,9 +23,14 @@ export default async function middleware(req: NextRequest) {
   if (
     isPublicRoute &&
     token &&
-    !req.nextUrl.pathname.startsWith('/dashboard')
+    (!req.nextUrl.pathname.startsWith('/dashboard') || !req.nextUrl.pathname.startsWith('/admin'))
   ) {
-    return NextResponse.redirect(new URL('/dashboard', req.nextUrl))
+    if (token?.role === 'Admin') {
+      return NextResponse.redirect(new URL('/admin', req.nextUrl))
+    }else {
+      return NextResponse.redirect(new URL('/dashboard', req.nextUrl))
+    }
+   
   }
  
   return NextResponse.next()

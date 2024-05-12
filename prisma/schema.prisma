@@ -27,6 +27,7 @@ model User {
   password    String
   company Company?
   smeLoan Loan[]
+  role Role @default(User)
 }
 
 model Company {
@@ -35,8 +36,14 @@ model Company {
   email  String @unique
   address String
   user User @relation(fields: [userId], references: [id])
+  companyConnect String @unique
   userId String @unique @db.ObjectId
   smeLoan Loan[]
+}
+
+enum Role {
+  Admin
+  User
 }
 
 enum Status {

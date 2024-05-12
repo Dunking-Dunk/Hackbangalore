@@ -18,13 +18,21 @@ import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios'
 import { signIn } from 'next-auth/react';
-
+import CodatSetup from '@/components/CodatSetup'
+import { createCompany } from '@/lib/bankAction';
+import {
+  ConnectionCallbackArgs,
+  ErrorCallbackArgs,
+} from "@codat/sdk-link-types"
+import { CodatLink } from "@/components/CodatLink";
 
 const AuthForm = ({ type }: { type: string }) => {
   const {toast} = useToast()
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [companyId, setCompanyId] = useState(''); //provide company ID
+  const [modalOpen, setModalOpen] = useState(true);
 
   const formSchema = authFormSchema(type);
 
@@ -58,14 +66,16 @@ const AuthForm = ({ type }: { type: string }) => {
           password: data.password,
         }
 
-        const buisnessData = {
+        const buisnessData:any = {
           name: data.buisnessName,
           address: data.buisnessAddress,
           email: data.buisnessEmail
         }
-
+        const companyRes:any = await createCompany(buisnessData.name)
+        const parse = JSON.parse(companyRes)
+        setCompanyId(parse?.id)
+        buisnessData.companyConnect = companyId
         const res = await axios.post('/api/register', {userData, buisnessData})
-        router.push('/sign-in')
         setUser(res.data);
       }
 
@@ -78,7 +88,8 @@ const AuthForm = ({ type }: { type: string }) => {
             toast({
               title: "Succesefully Logged In",
             })
-          router.push('/dashboard')}
+            router.refresh()
+          }
         else {
           toast({
             title: "Something went Wrong",
@@ -95,14 +106,18 @@ const AuthForm = ({ type }: { type: string }) => {
     } finally {
       setIsLoading(false);
     }
-
-
-    // } catch (error) {
-    //   console.log(error);
-    // } finally {
-    //   setIsLoading(false);
-    // }
   }
+
+  const onConnection = (connection: ConnectionCallbackArgs) =>
+    alert(`On connection callback - ${connection.connectionId}`);
+const onClose = () => setModalOpen(false);
+const onFinish = () => {
+    console.log('completed')
+    router.push('sign-in')
+}  
+const onError = (error: ErrorCallbackArgs) =>
+  alert(`On error callback - ${error.message}`);
+
 
   return (
     <section className="flex mt-28 mb-10 w-full max-w-[500px] flex-col justify-center gap-5 md:gap-8">
@@ -126,11 +141,15 @@ const AuthForm = ({ type }: { type: string }) => {
       </header>
       {user ? (
         <div className="flex flex-col gap-4">
-
-            {/* businessname
-            buisnessEmail
-            buisnessAddress */}
-          
+               <div className={' w-44 h-full z-50'}>
+                    <CodatLink
+                        companyId={companyId}
+                        onConnection={onConnection}
+                        onError={onError}
+                        onClose={onClose}
+                        onFinish={onFinish}
+                    />
+                </div>
         </div>
       ) : (
         <>

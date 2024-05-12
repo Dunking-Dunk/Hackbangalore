@@ -21,9 +21,10 @@ import {
 } from "@/components/ui/avatar"
 import { ModeToggle } from '@/components/toggle-mode'
 import Logo from '../../public/icon/logo.png'
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 
 export default function Header({ props }: {props?: any}) {
+    const session = useSession()
 
     const onLogout = () => {
         signOut()
@@ -52,7 +53,7 @@ export default function Header({ props }: {props?: any}) {
                                     <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
-                                <p>Hursun</p>
+                                <p>{session.data?.user.username}</p>
                             </div>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-20">
