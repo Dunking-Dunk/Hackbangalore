@@ -29,7 +29,7 @@ loader = WebBaseLoader(["https://msme.gov.in/", "https://udyamregistration.gov.i
 docs = loader.load()
 documents = RecursiveCharacterTextSplitter(chunk_size=20, chunk_overlap=2).split_documents(docs)
 
-vectordb = FAISS.from_documents(documents, OpenAIEmbeddings(api_key=api_key))
+vectordb = FAISS.from_documents(documents, OpenAIEmbeddings(api_key='YOUR API KEY'))
 retriever = vectordb.as_retriever()
 
 retriever_tool = create_retriever_tool(retriever, "sme_search", "Search for information relevant to small and medium enterprises (SMEs). If you have any questions about SMEs, you can use this tool.")
