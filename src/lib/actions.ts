@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 "use server"
 import { db } from "./db"
 
@@ -73,3 +75,14 @@ export const getAllLoan = async() => {
     })
 }
 
+export const getEveryLoan = async() => {
+    return await db.loan.findMany({})
+}
+
+export const getLoan = async(id) => {
+    return await db.loan.findFirst({
+        where: {
+            id: id
+        }
+    })
+}

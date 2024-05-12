@@ -14,11 +14,7 @@ const Sidebar = () => {
                 </div>
                 <Separator />
                 <div className="px-6  w-full">
-                <Link href={'/dashboard/marketplace'}>Resources Market</Link>
-                </div>
-                <Separator />
-                <div className="px-6  w-full">
-                <Link href={'/dashboard/marketplace'}>Ai Assitance</Link>
+                <Link href={'/dashboard/ai'}>Ai Assitance</Link>
                 </div>
                 <Separator />
             </div>
