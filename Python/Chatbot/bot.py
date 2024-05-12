@@ -9,7 +9,6 @@ from langchain.agents import create_openai_tools_agent, AgentExecutor
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from dotenv import load_dotenv
 
 app = FastAPI()
 
@@ -30,15 +29,12 @@ loader = WebBaseLoader(["https://msme.gov.in/", "https://udyamregistration.gov.i
 docs = loader.load()
 documents = RecursiveCharacterTextSplitter(chunk_size=20, chunk_overlap=2).split_documents(docs)
 
-load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")
-
 vectordb = FAISS.from_documents(documents, OpenAIEmbeddings(api_key=api_key))
 retriever = vectordb.as_retriever()
 
 retriever_tool = create_retriever_tool(retriever, "sme_search", "Search for information relevant to small and medium enterprises (SMEs). If you have any questions about SMEs, you can use this tool.")
 
-llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=api_key)
+llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key='YOUR API KEY')
 prompt = hub.pull("hwchase17/openai-functions-agent")
 agent = create_openai_tools_agent(llm, [retriever_tool], prompt)
 agent_executor = AgentExecutor(agent=agent, tools=[retriever_tool], verbose=False)
